@@ -1,0 +1,16 @@
+미들웨어
+- express가 실행되면서 들어온 어떤 request가 응답이 되어 나갈때까지 거치는 모든 함수
+- express 자체가 함수들을 거치는 구조이고 각 함수 하나하나를 미들웨어라 본다
+- 인자 : req, res, next(미들웨어가 언제끝날지 모르기 때문에 next()를 해줘야함)
+- 한번에 순서대로 쭉 붙여 쓸 수도 있다.
+    ex) app.use("/", (req, res, next) => {
+            console.log("Middleware 1");
+            },(req,res,next)=>{
+                console.log("Middleware 1.2");
+            });
+- 뒤쪽 미들웨어에 값을 넘겨주는 방법
+    : req에 mutation을 주면 뒤쪽에서도 사용가능하다
+    : ex) req.requesredAt = requesredAt; || req.body = body;
+- async 미들웨어 
+    : async(req, res, next)이런 식으로 사용
+    : 안쪽에서 await사용가능
