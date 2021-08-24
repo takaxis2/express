@@ -1,13 +1,18 @@
-import express from "express";
+import express, { request } from "express";
+import multer from "multer";
+
+const upload = multer({ dest: "uploads/" }); //업로드한 파일들을 어디에 저장할지 지정
 
 const router = express.Router();
 
 const USER = {
   13: {
     nickname: "qwe",
+    profileImgKey: undefined,
   },
   15: {
     nickname: "asd",
+    profileImgKey: undefined,
   },
 };
 
@@ -47,6 +52,8 @@ router.get("/:id", (req, res) => {
     res.render("user-profile", {
       //@ts-ignore
       nickname: req.user.nickname,
+      userId: req.params.id,
+      profileImgURL: "/uploads/" + req.user.profileImgKey,
     });
   }
 });
@@ -62,6 +69,15 @@ router.post("/:id/nickname", (req, res) => {
 
   user.nickname = nickname;
   res.send(`User nickname updated : ${nickname}`);
+});
+
+router.post("/:id/profile", upload.single("profile"), (req, res, next) => {
+  //console.log(req.files);
+  const { user } = req;
+  const { filename } = req.file;
+  user.profileImgKey = filename;
+
+  res.send(`User Image Uploaded : ${filename}`);
 });
 
 export default router;

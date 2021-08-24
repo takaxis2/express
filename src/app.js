@@ -13,6 +13,7 @@ const PORT = 5000;
 
 app.use("/users", router);
 app.use("/public", express.static("src/public"));
+app.use("/uploads", express.static("uploads"));
 
 app.use((err, req, res, next) => {
   res.statusCode = err.statusCode || 500;

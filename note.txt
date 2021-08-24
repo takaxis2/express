@@ -83,3 +83,7 @@ API testing
     : npm i @babel/plugin-transform-modules-commonjs 한다
  - export default는 import로 받아야하고, module.exports는 require로 받아야 작동한다 
  - [ERR_MODULE_NOT_FOUND]는 확장자를 안써서 생기는 경우
+
+이미지 업로드
+ - form에서 enctype="multpart-data"로 설정
+ - npm i multer 설치, 데이터를 파싱해준다
