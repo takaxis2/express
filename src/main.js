@@ -1,29 +1,22 @@
 //@ts-check
 
 import express from "express";
-import fs from "fs/promises";
+import router from "./routers/user.js";
 
 const app = express();
 
+app.use(express.json()); //json으로 받겠다
+app.set("view engine", "pug");
+app.set("views", "src/views"); //파일 경로
+
 const PORT = 5000;
 
-app.use("/", async (req, res, next) => {
-  console.log("Middleware 1");
+app.use("/users", router);
+app.use("/public", express.static("src/public"));
 
-  const fileContent = await fs.readFile(".gitignore", "utf-8");
-
-  const reqAt = new Date();
-  //@ts-ignore
-  req.reqAt = reqAt;
-  //@ts-ignore
-  req.fileContent = fileContent;
-  next();
-});
-
-app.use((req, res) => {
-  console.log("MiddleWare 2");
-  //@ts-ignore
-  res.send(`hello, express: ${req.reqAt} ${req.fileContent}`);
+app.use((err, req, res, next) => {
+  res.statusCode = err.statusCode || 500;
+  res.send(err.message);
 });
 
 app.listen(PORT, () => {
