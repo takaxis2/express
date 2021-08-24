@@ -63,3 +63,23 @@ static 파일 서빙
     : 4개의 인자를 받는 경우에만 에러 핸들링 미들웨어로 취급
  - async로 할경우 try/catch로 해야 함, promise 핸들링이 안돼서 터짐
     : next()에 인자를 넣어주면 에러가 된다
+
+API testing
+ - jest
+    : app.spec.js 등 중간에 spec을 넣어서 파일을 생성
+    : expect().toBe() 등으로 조건?과 결과값을 넣는다
+    : package.json에 scripts에 "test":"jest" 추가
+    : jest에선 함수를 다 async로 만들 수 있다(await붙히기 쌉가능)
+ - supertest
+ - import/export 안되는 문제
+    : .babelrc 만들고
+    {
+         "env": {
+            "test": {
+            "plugins": ["@babel/plugin-transform-modules-commonjs"]
+            }
+        }   
+    } 쓴다
+    : npm i @babel/plugin-transform-modules-commonjs 한다
+ - export default는 import로 받아야하고, module.exports는 require로 받아야 작동한다 
+ - [ERR_MODULE_NOT_FOUND]는 확장자를 안써서 생기는 경우

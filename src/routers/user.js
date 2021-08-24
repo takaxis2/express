@@ -56,4 +56,12 @@ router.post("/", (req, res) => {
   res.send("Root - POST");
 });
 
+router.post("/:id/nickname", (req, res) => {
+  const { user } = req;
+  const { nickname } = req.body;
+
+  user.nickname = nickname;
+  res.send(`User nickname updated : ${nickname}`);
+});
+
 export default router;
