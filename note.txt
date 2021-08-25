@@ -87,3 +87,5 @@ API testing
 이미지 업로드
  - form에서 enctype="multpart-data"로 설정
  - npm i multer 설치, 데이터를 파싱해준다
+
+
