@@ -88,4 +88,27 @@ API testing
  - form에서 enctype="multpart-data"로 설정
  - npm i multer 설치, 데이터를 파싱해준다
 
-
+MongoDB
+ - 환경변수로 패스워드 사용시 dotenv패키지 없으면 오류남
+ - RDB의 경우 one to many관계를 사용할때 collection/table을 새로 만들지만
+   noSQL의 경우 임베딩을 한다(한 collection에 더 때려박는다) -> join이 더 힘들고 무거움, 제약사항이 있다
+ - 임베딩 제약사항
+      : 한 document의 최대 사이즈는 16mb이다
+      : nesting(중첩, 밑에 밑에 밑에)는 100개 이상x
+ - nesting된거 찾는법
+      : dot-notation으로 찾을 수 있다
+      : await users.find({'contacts.type':'phone'})이런식
+ - many to many관계 : 이런 경우는 collection을 따로 만드는게 더 좋다
+   const cursor = users.aggregate([
+       {
+         $lookup: { from: "cities" },
+         localField: "city",
+         foreignField: "name",
+         as: "city_info",
+      },
+   ]);
+   : cities라는 collection에서 users collection의 city라는 field에 cities의 name field 값을 city_info로 붙여서 보여주겟다
+   : RDM의 join느낌
+   : 인수로 파이프라인을 받는데 배열의 형태로 오브젝트를 넘길 수 있다, 오브젝트들은 특정 작업을 하며 순서대로 거쳐가고 결과를 리턴
+   : $match에서 안쪽에 $and:[]을 넣고 그 안에 조건들을 넣으면 다 걸러져서 나온다 $or도 있다
+   : $count: "num_users"로 몇개인지도 확인가능
